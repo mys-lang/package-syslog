@@ -1,0 +1,10 @@
+from log import get_logger
+from log import HANDLER
+# Should not be needed.
+from log import Handler
+from syslog import SyslogHandler
+
+def main():
+    HANDLER = SyslogHandler()
+    logger = get_logger("log_handler")
+    logger.warning("Hello, world!")

@@ -1,0 +1,8 @@
+[package]
+name = "log_handler"
+version = "0.1.0"
+authors = ["Erik Moqvist <erik.moqvist@gmail.com>"]
+
+[dependencies]
+log = "latest"
+syslog = { path = "../.." }
