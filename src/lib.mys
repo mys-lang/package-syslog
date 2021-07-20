@@ -1,0 +1,22 @@
+c"""source-before-namespace
+#include <syslog.h>
+
+static inline void syslog_wrapper(int priority, const char *message_p)
+{
+    syslog(priority, message_p);
+}
+"""
+
+def syslog(priority: i64, message: string):
+    utf8_message = message.to_utf8()
+    utf8_message += 0
+    
+    c"""
+    syslog_wrapper(priority, (const char *)utf8_message.m_bytes->data());
+    """
+
+@test
+def test_syslog():
+    priority: i64 = 0
+    c"priority = LOG_WARNING;"
+    syslog(priority, "Testing syslog")
