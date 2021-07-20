@@ -1,22 +1,85 @@
+from log import Handler
+
 c"""source-before-namespace
 #include <syslog.h>
 
+static inline void openlog_wrapper(const char *ident, int option, int facility)
+{
+    openlog(ident, option, facility);
+}
+
 static inline void syslog_wrapper(int priority, const char *message_p)
 {
-    syslog(priority, message_p);
+    syslog(priority, "%s", message_p);
+}
+
+static inline void closelog_wrapper()
+{
+    closelog();
+}
+
+static inline int setlogmask_wrapper(int mask)
+{
+    setlogmask(mask);
 }
 """
 
+def openlog(ident: string, option: i64, facility: i64):
+    """Opens a connection to the system logger for a program.
+
+    """
+
+    utf8_ident = ident.to_utf8()
+    utf8_ident += 0
+
+    c"openlog_wrapper((const char *)utf8_ident.m_bytes->data(), option, facility);"
+
 def syslog(priority: i64, message: string):
+    """Generates a log message.
+
+    """
+
     utf8_message = message.to_utf8()
     utf8_message += 0
-    
-    c"""
-    syslog_wrapper(priority, (const char *)utf8_message.m_bytes->data());
+
+    c"syslog_wrapper(priority, (const char *)utf8_message.m_bytes->data());"
+
+def closelog():
+    """Closes the file descriptor being used to write to the system
+       logger.
+
     """
+
+    c"closelog_wrapper();"
+
+def setlogmask(mask: i64) -> i64:
+    """Sets the logmask for the calling process, and returns the previous
+    mask.  If the mask argument is 0, the current logmask is not
+    modified.
+
+    """
+
+    res: i64 = 0
+
+    c"res = setlogmask_wrapper(mask);"
+
+    return res
+
+class SyslogHandler(Handler):
+    """Writes log messages to the system log.
+
+    """
+
+    def write(self, message: string):
+        """Writes given log message to the system log.
+
+        """
+
+        syslog(1, message)
 
 @test
 def test_syslog():
-    priority: i64 = 0
-    c"priority = LOG_WARNING;"
-    syslog(priority, "Testing syslog")
+    openlog("mys-syslog", 0, 1)
+    syslog(1, "Mys testing syslog")
+    setlogmask(0xff)
+    closelog()
