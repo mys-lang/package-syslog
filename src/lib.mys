@@ -129,7 +129,7 @@ class SyslogHandler(Handler):
 
 @test
 def test_syslog():
-    openlog("mys-syslog", 0, 1)
+    openlog("mys-syslog", 0, FACILITY_USER)
     syslog(LEVEL_WARNING, "Mys testing syslog")
     setlogmask(log_upto(LEVEL_ERR))
     syslog(LEVEL_DEBUG, "Mys testing syslog 2")

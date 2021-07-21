@@ -1,0 +1,5 @@
+from syslog import syslog
+from syslog import LEVEL_WARNING
+
+def main():
+    syslog(LEVEL_WARNING, "A message.")

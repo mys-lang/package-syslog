@@ -1,8 +1,8 @@
 [package]
-name = "syslog"
-version = "0.3.0"
+name = "basic"
+version = "0.1.0"
 authors = ["Erik Moqvist <erik.moqvist@gmail.com>"]
-description = "Unix syslog."
 
 [dependencies]
 log = "latest"
+syslog = { path = "../.." }
