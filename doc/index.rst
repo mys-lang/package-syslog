@@ -18,14 +18,14 @@ Generate a syslog message.
    def main():
        syslog(LEVEL_WARNING, "A message.")
 
-The output:
+The output on a Ubuntu machine:
 
 .. code-block:: text
 
    $ mys run
    ...
-   $ tail /var/log/syslog
-   ...
+   $ tail -1 /var/log/syslog
+   Jul 21 07:57:04 erik-GR8 app: A message.
 
 API
 ===
