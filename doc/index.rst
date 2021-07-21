@@ -1,3 +1,5 @@
+|test|_
+
 About
 =====
 
@@ -31,5 +33,8 @@ API
 ===
 
 .. mysfile:: src/lib.mys
+
+.. |test| image:: https://github.com/mys-lang/package-syslog/actions/workflows/pythonpackage.yml/badge.svg
+.. _test: https://github.com/mys-lang/package-syslog/actions/workflows/pythonpackage.yml
 
 .. _Mys programming language: https://mys-lang.org
