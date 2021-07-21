@@ -24,6 +24,43 @@ static inline int setlogmask_wrapper(int mask)
 }
 """
 
+# Levels.
+LEVEL_EMERG: i64 = c"LOG_EMERG"
+LEVEL_ALERT: i64 = c"LOG_ALERT"
+LEVEL_CRIT: i64 = c"LOG_CRIT"
+LEVEL_ERR: i64 = c"LOG_ERR"
+LEVEL_WARNING: i64 = c"LOG_WARNING"
+LEVEL_NOTICE: i64 = c"LOG_NOTICE"
+LEVEL_INFO: i64 = c"LOG_INFO"
+LEVEL_DEBUG: i64 = c"LOG_DEBUG"
+
+# Facilities.
+FACILITY_KERN: i64 = c"LOG_KERN"
+FACILITY_USER: i64 = c"LOG_USER"
+FACILITY_MAIL: i64 = c"LOG_MAIL"
+FACILITY_DAEMON: i64 = c"LOG_DAEMON"
+FACILITY_AUTH: i64 = c"LOG_AUTH"
+FACILITY_LPR: i64 = c"LOG_LPR"
+FACILITY_NEWS: i64 = c"LOG_NEWS"
+FACILITY_UUCP: i64 = c"LOG_UUCP"
+FACILITY_CRON: i64 = c"LOG_CRON"
+FACILITY_SYSLOG: i64 = c"LOG_SYSLOG"
+FACILITY_LOCAL0: i64 = c"LOG_LOCAL0"
+FACILITY_LOCAL1: i64 = c"LOG_LOCAL1"
+FACILITY_LOCAL2: i64 = c"LOG_LOCAL2"
+FACILITY_LOCAL3: i64 = c"LOG_LOCAL3"
+FACILITY_LOCAL4: i64 = c"LOG_LOCAL4"
+FACILITY_LOCAL5: i64 = c"LOG_LOCAL5"
+FACILITY_LOCAL6: i64 = c"LOG_LOCAL6"
+FACILITY_LOCAL7: i64 = c"LOG_LOCAL7"
+FACILITY_AUTHPRIV: i64 = c"LOG_AUTHPRIV"
+
+# Options.
+OPTION_PID: i64 = c"LOG_PID"
+OPTION_CONS: i64 = c"LOG_CONS"
+OPTION_NDELAY: i64 = c"LOG_NDELAY"
+OPTION_PERROR: i64 = c"LOG_PERROR"
+
 def openlog(ident: string, option: i64, facility: i64):
     """Opens a connection to the system logger for a program.
 
@@ -65,6 +102,19 @@ def setlogmask(mask: i64) -> i64:
 
     return res
 
+def log_upto(level: i64) -> i64:
+    """Calculates the mask for all levels up to and including given level.
+
+    """
+
+    mask: i64 = 0
+
+    c"""
+    mask = LOG_UPTO(level);
+    """
+
+    return mask
+
 class SyslogHandler(Handler):
     """Writes log messages to the system log.
 
@@ -75,11 +125,12 @@ class SyslogHandler(Handler):
 
         """
 
-        syslog(1, message)
+        syslog(LEVEL_DEBUG, message)
 
 @test
 def test_syslog():
     openlog("mys-syslog", 0, 1)
-    syslog(1, "Mys testing syslog")
-    setlogmask(0xff)
+    syslog(LEVEL_WARNING, "Mys testing syslog")
+    setlogmask(log_upto(LEVEL_ERR))
+    syslog(LEVEL_DEBUG, "Mys testing syslog 2")
     closelog()
