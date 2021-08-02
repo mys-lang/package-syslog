@@ -14,7 +14,7 @@ Example
 
 Generate a syslog message.
 
-.. code-block:: python
+.. code-block:: mys
 
    from syslog import syslog
    from syslog import LEVEL_WARNING
