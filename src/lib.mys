@@ -71,10 +71,13 @@ def openlog(ident: string, option: i64, facility: i64):
 
     c"openlog_wrapper((const char *)utf8_ident.m_bytes->data(), option, facility);"
 
-def syslog(priority: i64, message: string):
+def syslog(priority: i64, message: lazy[string]):
     """Generates a log message.
 
     """
+
+    if (setlogmask(0) & priority) == 0:
+        return
 
     utf8_message = message.to_utf8()
     utf8_message += 0
