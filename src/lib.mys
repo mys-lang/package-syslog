@@ -20,7 +20,7 @@ static inline void closelog_wrapper()
 
 static inline int setlogmask_wrapper(int mask)
 {
-    setlogmask(mask);
+    return setlogmask(mask);
 }
 """
 
