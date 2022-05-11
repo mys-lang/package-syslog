@@ -19,7 +19,7 @@ Generate a syslog message.
    from syslog import syslog
    from syslog import LEVEL_WARNING
 
-   def main():
+   func main():
        syslog(LEVEL_WARNING, "A message.")
 
 The output on a Ubuntu machine:

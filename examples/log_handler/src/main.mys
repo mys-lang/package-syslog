@@ -4,7 +4,7 @@ from log import HANDLER
 from log import Handler
 from syslog import SyslogHandler
 
-def main():
+func main():
     HANDLER = SyslogHandler()
     logger = get_logger("log_handler")
     logger.warning("Hello, world!")

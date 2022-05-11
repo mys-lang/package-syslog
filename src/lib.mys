@@ -61,7 +61,7 @@ OPTION_CONS: i64 = c"LOG_CONS"
 OPTION_NDELAY: i64 = c"LOG_NDELAY"
 OPTION_PERROR: i64 = c"LOG_PERROR"
 
-def openlog(ident: string, option: i64, facility: i64):
+func openlog(ident: string, option: i64, facility: i64):
     """Opens a connection to the system logger for a program.
 
     """
@@ -71,7 +71,7 @@ def openlog(ident: string, option: i64, facility: i64):
 
     c"openlog_wrapper((const char *)utf8_ident.m_bytes->data(), option, facility);"
 
-def syslog(priority: i64, message: lazy[string]):
+func syslog(priority: i64, message: lazy[string]):
     """Generates a log message.
 
     """
@@ -84,7 +84,7 @@ def syslog(priority: i64, message: lazy[string]):
 
     c"syslog_wrapper(priority, (const char *)utf8_message.m_bytes->data());"
 
-def closelog():
+func closelog():
     """Closes the file descriptor being used to write to the system
        logger.
 
@@ -92,7 +92,7 @@ def closelog():
 
     c"closelog_wrapper();"
 
-def setlogmask(mask: i64) -> i64:
+func setlogmask(mask: i64) -> i64:
     """Sets the logmask for the calling process, and returns the previous
     mask.  If the mask argument is 0, the current logmask is not
     modified.
@@ -105,7 +105,7 @@ def setlogmask(mask: i64) -> i64:
 
     return res
 
-def log_upto(level: i64) -> i64:
+func log_upto(level: i64) -> i64:
     """Calculates the mask for all levels up to and including given level.
 
     """
@@ -123,7 +123,7 @@ class SyslogHandler(Handler):
 
     """
 
-    def write(self, message: string):
+    func write(self, message: string):
         """Writes given log message to the system log.
 
         """
@@ -131,7 +131,7 @@ class SyslogHandler(Handler):
         syslog(LEVEL_DEBUG, message)
 
 @test
-def test_syslog():
+func test_syslog():
     openlog("mys-syslog", 0, FACILITY_USER)
     syslog(LEVEL_WARNING, "Mys testing syslog")
     setlogmask(log_upto(LEVEL_ERR))
