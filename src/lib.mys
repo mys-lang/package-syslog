@@ -71,7 +71,7 @@ func openlog(ident: string, option: i64, facility: i64):
 
     c"openlog_wrapper((const char *)utf8_ident.m_bytes->data(), option, facility);"
 
-func syslog(priority: i64, message: lazy[string]):
+func syslog(priority: i64, message: string):
     """Generates a log message.
 
     """
