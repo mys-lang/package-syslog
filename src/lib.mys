@@ -130,8 +130,7 @@ class SyslogHandler(Handler):
 
         syslog(LEVEL_DEBUG, message)
 
-@test
-func test_syslog():
+test syslog():
     openlog("mys-syslog", 0, FACILITY_USER)
     syslog(LEVEL_WARNING, "Mys testing syslog")
     setlogmask(log_upto(LEVEL_ERR))
