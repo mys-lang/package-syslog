@@ -1,5 +1,5 @@
-from syslog import syslog
+from syslog import SYSLOG
 from syslog import LEVEL_WARNING
 
 func main():
-    syslog(LEVEL_WARNING, "A message.")
+    SYSLOG(LEVEL_WARNING, "A message.")

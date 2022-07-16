@@ -7,4 +7,4 @@ from syslog import SyslogHandler
 func main():
     HANDLER = SyslogHandler()
     logger = get_logger("log_handler")
-    logger.warning("Hello, world!")
+    logger.WARNING("Hello, world!")

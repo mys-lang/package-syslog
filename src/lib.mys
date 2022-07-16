@@ -71,7 +71,7 @@ func openlog(ident: string, option: i64, facility: i64):
 
     c"openlog_wrapper((const char *)utf8_ident.m_bytes->data(), option, facility);"
 
-func syslog(priority: i64, message: string):
+macro SYSLOG(priority: i64, message: string):
     """Generates a log message.
 
     """
@@ -128,11 +128,11 @@ class SyslogHandler(Handler):
 
         """
 
-        syslog(LEVEL_DEBUG, message)
+        SYSLOG(LEVEL_DEBUG, message)
 
 test syslog():
     openlog("mys-syslog", 0, FACILITY_USER)
-    syslog(LEVEL_WARNING, "Mys testing syslog")
+    SYSLOG(LEVEL_WARNING, "Mys testing syslog")
     setlogmask(log_upto(LEVEL_ERR))
-    syslog(LEVEL_DEBUG, "Mys testing syslog 2")
+    SYSLOG(LEVEL_DEBUG, "Mys testing syslog 2")
     closelog()
