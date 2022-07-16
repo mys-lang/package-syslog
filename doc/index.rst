@@ -16,11 +16,11 @@ Generate a syslog message.
 
 .. code-block:: mys
 
-   from syslog import syslog
+   from syslog import SYSLOG
    from syslog import LEVEL_WARNING
 
    func main():
-       syslog(LEVEL_WARNING, "A message.")
+       SYSLOG(LEVEL_WARNING, "A message.")
 
 The output on a Ubuntu machine:
 
